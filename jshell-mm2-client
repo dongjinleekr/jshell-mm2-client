@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+JSHELL=$(which jshell)
+
+if [[ -z ${JSHELL} ]]; then
+  echo "jshell not installed; exit."
+  exit 1
+fi
+
+GRADLE=$(which gradle)
+
+if [[ -z ${GRADLE} ]]; then
+  echo "gradle not installed; exit."
+  exit 1
+fi
+
+UTILS_SCRIPT=$(dirname $(readlink -f $0))/utils.jsh
+
+CLASSPATH=$(gradle -q printClasspath) ${JSHELL} --start PRINTING --start ${UTILS_SCRIPT}
+
